@@ -18,8 +18,8 @@ namespace GCodeQuickLook
             return new LineGeometryModel3D
             {
                 Geometry = geometry,
-                Color = new Color4(0f, 1f, 0f, 1f),
-                Thickness = 1.0f
+                Thickness = 1.0
+                // Intentionally NOT setting Color to avoid Color4 vs Media.Color mismatch
             };
         }
     }
