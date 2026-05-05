@@ -1,0 +1,33 @@
+name: Build GCodeQuickLook
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore and Build
+        run: msbuild .\src\GCodeQuickLook\GCodeQuickLook.csproj /restore /p:Configuration=Release
+
+      - name: Package plugin
+        run: |
+          mkdir artifacts
+          mkdir artifacts\GCodeQuickLook.qlplugin
+          copy src\GCodeQuickLook\plugin.json artifacts\GCodeQuickLook.qlplugin\
+          copy src\GCodeQuickLook\bin\Release\GCodeQuickLook.dll artifacts\GCodeQuickLook.qlplugin\
+          Compress-Archive -Path artifacts\GCodeQuickLook.qlplugin -DestinationPath artifacts\GCodeQuickLook.qlplugin.zip -Force
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GCodeQuickLook
+          path: artifacts\GCodeQuickLook.qlplugin.zip

@@ -1,0 +1,8 @@
+{
+  "name": "GCodeQuickLook",
+  "author": "Thane",
+  "version": "1.0.0",
+  "description": "3D G-code viewer using HelixToolkit SharpDX",
+  "extensions": [ ".gcode", ".nc", ".tap", ".cnc" ],
+  "entry": "GCodeQuickLook.GCodeViewerFactory, GCodeQuickLook"
+}
